@@ -1,0 +1,42 @@
+https://leetcode.com/problems/find-players-with-zero-or-one-losses/?envType=daily-question&envId=2024-01-15
+
+
+
+import java.util.*;
+
+class Solution {
+    public List<List<Integer>> findWinners(int[][] matches) {
+        int n = matches.length;    // row
+        int m = matches[0].length; // col
+        Map<Integer, Integer> map = new HashMap<>();
+        List<List<Integer>> ans = new ArrayList<>();
+        for (int j = 0; j < n; j++) 
+        {
+            int key = matches[j][m - 1];
+            if(!map.containsKey(key)) map.put(key,1);
+            else
+            map.put(key , map.get(key) + 1);
+        }
+
+        Set<Integer> win = new HashSet<>();
+
+        for (int i = 0; i < n; i++) {
+            if (!map.containsKey(matches[i][0])) {
+                win.add(matches[i][0]);
+            }
+        }
+        List<Integer> winList = new ArrayList<>(win);
+        List<Integer> lostList = new ArrayList<>();
+
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (entry.getValue() == 1) {
+                lostList.add(entry.getKey());
+            }
+        }
+            Collections.sort(winList);
+            Collections.sort(lostList);
+            ans.add(winList);
+            ans.add(lostList);
+            return ans;
+    }
+}

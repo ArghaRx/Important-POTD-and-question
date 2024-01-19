@@ -1,0 +1,41 @@
+https://leetcode.com/problems/minimum-falling-path-sum/description/?envType=daily-question&envId=2024-01-19
+
+
+import java.util.*;
+
+class Solution {
+
+
+    public int minFallingPathSum(int[][] matrix) {
+        int r = matrix.length;
+        int c = matrix[0].length;
+        int ans = Integer.MAX_VALUE;
+        Map<String, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < c; i++)
+            ans = Math.min(ans, recursion(0, i, matrix, map));
+
+        return ans;
+    }
+
+    public static int recursion(int row, int col, int[][] matrix, Map<String, Integer> map) {
+        int r = matrix.length;
+        int c = matrix[0].length;
+        if (row == r)
+            return 0;
+        if (col < 0 || col >= c)
+            return Integer.MAX_VALUE;
+
+        String key = row + "Argha" + col;
+        if (map.containsKey(key))
+            return map.get(key);
+
+        int op1 = recursion(row + 1, col - 1, matrix, map);
+        int op2 = recursion(row + 1, col, matrix, map);
+        int op3 = recursion(row + 1, col + 1, matrix, map);
+
+        map.put(key, matrix[row][col] + Math.min(op1, Math.min(op2, op3)));
+        return matrix[row][col] + Math.min(op1, Math.min(op2, op3));
+
+    }
+}

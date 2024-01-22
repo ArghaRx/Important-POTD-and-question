@@ -1,0 +1,38 @@
+https://leetcode.com/problems/smallest-missing-integer-greater-than-sequential-prefix-sum/description/
+
+
+import java.util.*;
+
+class Solution {
+    public int missingInteger(int[] nums) {
+        int n = nums.length;
+        int sum = nums[0];
+
+        // Take a set to check (in future)  any value is present or not
+        Set<Integer> set = new HashSet<>();
+        for(int i =0; i < n; i ++)
+        set.add(nums[i]);
+
+
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] == nums[i - 1] + 1) {
+                sum += nums[i];
+            } else
+                break;
+        }
+
+        // for (int i = 0; i < n; i++) {
+        //     if (Arrays.asList(nums).contains(sum))
+        //         sum ++;
+        //     else
+        //         break;
+        // }
+        for(int i = 0; i < set.size(); i++)
+        {
+            if(set.contains(sum)) sum += 1;
+
+            else return sum;
+        }
+        return -1;
+    }
+}

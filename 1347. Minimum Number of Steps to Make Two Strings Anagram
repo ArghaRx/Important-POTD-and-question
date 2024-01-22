@@ -3,7 +3,7 @@
 
 class Solution {
     public int minSteps(String s, String t) {
-        int arr[] = new int[26];
+        int arr[] = new int[26]; // vis array
 
         for(int i = 0 ; i < s.length() ; i++)
         {
@@ -13,9 +13,11 @@ class Solution {
         int result = 0;
 
 
-        for(int i = 0 ; i  < 26 ; i++) // It may presnt any ele which doesnot present in t,so if i itarate loop s.length or t.length that doesnot make sence .So it go  0  to 26
-        result += Math.max(0 , arr[i]);
-
+        for(int i = 0 ; i  < 26 ; i++)
+{                                            // It may presnt any ele which doesnot present in t,so if i itarate loop s.length or t.length that doesnot make sence .So it go  0  to 26
+        if(arr[i] > 0)
+        result += arr[i];
+        }
         return result;
     }
 }

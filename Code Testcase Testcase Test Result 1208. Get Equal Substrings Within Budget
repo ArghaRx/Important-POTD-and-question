@@ -1,0 +1,66 @@
+//* Important
+
+//*You are given two strings s and t of the same length and an integer maxCost.
+
+You want to change s to t. Changing the ith character of s to ith character of t costs |s[i] - t[i]| (i.e., the absolute difference between the ASCII
+   values of the characters).
+
+Return the maximum length of a substring of s that can be changed to be the same as the corresponding substring of t with a cost less than or equal to 
+   maxCost. If there is no substring from s that can be changed to its corresponding substring from t, return 0.
+
+ 
+
+Example 1:
+
+Input: s = "abcd", t = "bcdf", maxCost = 3
+Output: 3
+Explanation: "abc" of s can change to "bcd".
+That costs 3, so the maximum length is 3.
+Example 2:
+
+Input: s = "abcd", t = "cdef", maxCost = 3
+Output: 1
+Explanation: Each character in s costs 2 to change to character in t,  so the maximum length is 1.
+Example 3:
+
+Input: s = "abcd", t = "acde", maxCost = 0
+Output: 1
+Explanation: You cannot make any change, so the maximum length is 1.
+
+
+
+
+/////////////**___________________ Apporach to solve _________________________________________________
+
+. Initialize n to the length of string s.
+. Initialize ans to 0, which will hold the maximum length of the substring that can be changed within the given cost.
+. Initialize window to 0, which will accumulate the cost of changing the substring from s to t.
+. Initialize left to 0, which will be the starting index of the sliding window.
+. Loop through the string using right as the ending index of the sliding window.
+. Add the cost of changing s[right] to t[right] to window.
+. If window exceeds maxCost, shrink the window from the left by subtracting the cost of changing s[left] to t[left] and incrementing left.
+. Update ans with the maximum length of the substring found so far.
+. Return the maximum length ans.
+
+-------------------------------------------------------------------------------------------------------------------- |||||||||---
+in code left and right pointer fixed at 0th index, right pointer calculate the absolute diff of string s and t and store in window, when the difference exceed the maxCoast then
+left pointer coms forward and reduce the difference which we added previously.
+and every time after getting from inner loop we calculate the maxmium diff --> (right - left + 1)
+-------------------------------------------------------------------------------------------------------------------- |||||||||---
+
+class Solution {
+    public int equalSubstring(String s, String t, int maxCost) {
+        int ans = 0, window = 0, left = 0, right = 0;
+        for( ; right < s.length(); right++)
+        {
+            window += Math.abs(s.charAt(right) - t.charAt(right));
+            while(window > maxCost)
+            {
+                window -= Math.abs(s.charAt(left) - t.charAt(left));
+                left++;
+            }
+            ans = Math.max(ans, right - left + 1);
+        }
+        return ans;
+    }
+}
